@@ -1,3 +1,7 @@
+import os
+import matplotlib.pyplot as plt
+import matplotlib.pylab as pl
+import numpy as np
 
 
 # this function returns a rgb color code according to standard matlab colors    
@@ -19,7 +23,6 @@ def matlab_color(num):
 def specs_plot(specs,**params):
 # plot spectra in list
     
-    #import matplotlib.pyplot as plt
     
     if 'channelx' in params:
         channelx = params['channelx']
@@ -96,7 +99,6 @@ def ref_spec_plotting(ref_file,spec_files,fname_ref,fname_specs,**params):
 
 
     # Load modules
-    import os
 
     # Optional input
     if 'channelx_plot' in params:
