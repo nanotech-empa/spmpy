@@ -65,8 +65,8 @@ def specs_plot(specs,**params):
         plt.plot(x_data,y_data+counter*offset,color = c,label = s.name)
         counter = counter + 1
     
-    plt.xlabel('%s (%s)' % (channelx,x_unit))
-    plt.ylabel('%s (%s)' % (channely,y_unit))
+    plt.xlabel(f'{channelx} ({x_unit})')
+    plt.ylabel(f'{channely} ({y_unit})')
     
     if print_legend:
         plt.legend()

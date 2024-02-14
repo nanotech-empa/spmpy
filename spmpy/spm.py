@@ -90,7 +90,7 @@ class Spm:
             self.type = 'spec'
         else:
             print('Datatype not supported.')
-            return;
+            return
             
         ch = []    
         for key in self.napImport.signals:
@@ -203,7 +203,7 @@ class Spm:
                          
             if fb_enable == 'OFF':
                 label.append('constant height')
-                label.append('z-offset: %.3f%s' % z_offset)
+                label.append(f'z-offset: {z_offset[0]:.3f}{z_offset[1]}')
                 
             if np.abs(bias[0])<0.1:
                 bias = list(bias)
@@ -211,10 +211,10 @@ class Spm:
                 bias[1] = 'mV'
                 bias = tuple(bias)
                 
-            label.append('I = %.0f%s' % set_point)    
-            label.append('bias = %.2f%s' % bias)
-            label.append('size: %.1f%s x %.1f%s (%.0f%s)' % (width+height+angle))
-            label.append('comment: %s' % comment)
+            label.append(f'I = {set_point[0]:.0f}{set_point[1]}')    
+            label.append(f'bias = {bias[0]:.2f}{bias[1]}')
+            label.append(f'size: {width[0]}{width[1]} x {height[0]:.1f}{height[1]} ({angle[0]:.0f}{angle[1]})')
+            label.append(f'comment: {comment}')
             
             
         elif self.type == 'spec':
@@ -227,11 +227,10 @@ class Spm:
             lockin_phase= self.get_param('lockin_phase')
             lockin_frequency= self.get_param('lockin_frequency')
             comment = self.get_param('comment_spec')
-            
-                               
+
+
             #if lockin_status == 'ON':
-            label.append('lockin: A = %.0f%s (θ = %.0f%s, f = %.0f%s)' % (lockin_amplitude+lockin_phase+lockin_frequency))
-                 
+            label.append(f'lockin: A = {lockin_amplitude[0]:.0f}{lockin_amplitude[1]} (θ = {lockin_phase[0]:.0f}{lockin_phase[1]}, f = {lockin_frequency[0]:.0f}{lockin_frequency[1]})')     
             
             if fb_enable == 'FALSE':
                 label.append('feedback on')
@@ -239,12 +238,10 @@ class Spm:
             elif fb_enable == 'TRUE':
                 label.append('feedback off')
            
- 
-            label.append('setpoint: I = %.0f%s, V = %.1f%s' % (set_point+bias))    
-            
-            label.append('comment: %s' % comment)
+            label.append(f'setpoint: I = {set_point[0]:.0f}{set_point[1]}, V = {bias[0]:.1f}{bias[1]}')
+            label.append(f'comment: {comment}')
     
-        label.append('path: %s' % self.path)  
+        label.append(f'path: {self.path}')  
         label = '\n'.join(label)
         
         if show:
@@ -422,11 +419,11 @@ class Spm:
                 title = self.path  
                 
             plt.title(title + '\n', loc='left')
-            plt.xlabel('x (%s)' % width[1])
-            plt.ylabel('y (%s)' % height[1])
+            plt.xlabel(f'x ({width[1]})')
+            plt.ylabel(f'y ({height[1]})')
             
             cbar = plt.colorbar(im,fraction=0.046, pad=0.02, format='%.2g',shrink = 0.5,aspect=10)
-            cbar.set_label('%s (%s)' % (channel,chUnit))
+            cbar.set_label(f'{channel} ({chUnit}')
             
             if show:
                 plt.show()
@@ -530,8 +527,8 @@ class Spm:
                 
             plt.title(title + '\n', loc='left') 
                 
-            plt.xlabel('%s (%s)' % (channelx,x_unit))
-            plt.ylabel('%s (%s)' % (channely,y_unit))
+            plt.xlabel(f'{channelx} ({x_unit})')
+            plt.ylabel(f'{channely} ({y_unit})')
             
 
             if show:
