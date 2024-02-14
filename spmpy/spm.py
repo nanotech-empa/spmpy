@@ -10,13 +10,12 @@ import re
 
 class Spm:
 
-    DEFAULT_CONFIG = 'machine_config.yaml'
+    DEFAULT_CONFIG = os.path.dirname(os.path.abspath(__file__)) + '/machine_config.yaml'
 
     def __init__(self,path,config_file=DEFAULT_CONFIG):
 
-        SignalsListReference, ParamListReference = self.load_machine_configuration_from_yaml_file(config_file)
+        config = self.load_machine_configuration_from_yaml_file(config_file)
 
-              
       
         # self.path = path.replace('//', '/')
         abspath = os.path.abspath(path)
@@ -33,16 +32,29 @@ class Spm:
         else:
             print('Datatype not supported.')
             return;
-            
-        ch = []    
-        for key in self.napImport.signals:
-            try:
-                ch.append([d['ChannelName'] for d in SignalsListReference].index(key))
-            except:
-                pass;    
- 
-        self.SignalsList = [SignalsListReference[i] for i in ch] #List of all recorded channels
-        self.channels = [c['ChannelNickname'] for c in self.SignalsList] 
+    
+        
+        self.SignalsList = []
+        for key in self.napImport.signals.keys():
+            in_config = key in config["Channels"]
+            self.SignalsList.append({
+                'ChannelName': key,
+                'ChannelNickname': config["Channels"][key]["nickname"] if in_config else key,
+                'ChannelScaling': config["Channels"][key]["scaling"] if in_config else 1.0,
+                'ChannelUnit': config["Channels"][key]["unit"] if in_config else 'N/A',
+            })
+
+        self.channels = [c['ChannelNickname'] for c in self.SignalsList]
+
+        self.ParamListReference = []
+        for key in config["Parameters"].keys():
+            self.ParamListReference.append({
+                'ParamName': key,
+                'ParamNickname': config["Parameters"][key]["nickname"],
+                'ParamScaling': config["Parameters"][key]["scaling"],
+                'ParamUnit': config["Parameters"][key]["unit"],
+            })
+
         self.header = self.napImport.header
         
 
@@ -85,23 +97,8 @@ class Spm:
         if config['MachineConfig'] != 'THzSTM':
             warnings.warn('MachineConfig not set to THzSTM')
 
-        # Signals
-        SignalsListReference = []
-        for channel in list(config['Channels'].keys()):
-            SignalsListReference.append({'ChannelName': channel,
-                                        'ChannelNickname': config['Channels'][channel]['nickname'],
-                                        'ChannelScaling': config['Channels'][channel]['scaling'],
-                                        'ChannelUnit': config['Channels'][channel]['unit']})
-    
-        # Parameters
-        ParamListReference = []
-        for param in list(config['Parameters'].keys()):
-            ParamListReference.append({'ParamName': param,
-                                    'ParamNickname': config['Parameters'][param]['nickname'],
-                                    'ParamScaling': config['Parameters'][param]['scaling'],
-                                    'ParamUnit': config['Parameters'][param]['unit']})
 
-        return SignalsListReference, ParamListReference
+        return config
 
     def __repr__(self):
         return self.path
@@ -156,13 +153,13 @@ class Spm:
     #get parameter            
     def get_param(self,param):
  
-        if any(d['ParamNickname'] == param for d in ParamListReference):
-            paNum = [d['ParamNickname'] for d in ParamListReference].index(param)
+        if any(d['ParamNickname'] == param for d in self.ParamListReference):
+            paNum = [d['ParamNickname'] for d in self.ParamListReference].index(param)
 
-            if ParamListReference[paNum]['ParamScaling'] == 'na':
-                return self.napImport.header[ParamListReference[paNum]['ParamName']]
+            if self.ParamListReference[paNum]['ParamScaling'] is None:
+                return self.napImport.header[self.ParamListReference[paNum]['ParamName']]
             else:
-                return (float(self.napImport.header[ParamListReference[paNum]['ParamName']])*ParamListReference[paNum]['ParamScaling'],ParamListReference[paNum]['ParamUnit'])
+                return (float(self.napImport.header[self.ParamListReference[paNum]['ParamName']])*self.ParamListReference[paNum]['ParamScaling'],self.ParamListReference[paNum]['ParamUnit'])
             
         
         elif param == 'width' or param == 'height':
