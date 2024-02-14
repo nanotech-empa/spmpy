@@ -1,74 +1,19 @@
+import yaml
+import warnings
+import os
+import re
+import numpy as np
+import nanonispy as nap
+
 
 class Spm:
 
-    #Dictionary Channels
-    ChannelName = ['LI_Demod_1_X','LI_Demod_1_Y','Z','Current','Bias','Frequency_Shift','Amplitude','Excitation','Temperature_1',
-                   'Bias (V)','Bias calc (V)', 'Bias [bwd] (V)', 'Current (A)','Current [bwd] (A)','Amplitude (m)',
-                   'Amplitude [bwd] (m)', 'Excitation (V)', 'Excitation [bwd] (V)', 'Frequency Shift (Hz)', 'Frequency Shift [bwd] (Hz)',
-                   'LI Demod 1 X (A)','LI Demod 1 X (A) [bwd] (A)','PMT (V)','Counter 1 (Hz)','Counter_1', 'Z rel (m)', 'Z (m)','Time (s)',
-                   'LI Demod 0 X (V)','LI Demod 0 Y (V)','LI Demod 3 X (A)','LI Demod 3 Y (A)','LI_Demod_3_X','LI_Demod_3_Y',
-                   'Delay Sampling (s)','Delay THz1 (s)','Delay THz2 (s)','Position Phase1 (m)','Rotation1 (deg)','Rotation2 (deg)','Rotation (deg)','Index','Wavelength','Intensity']
-    ChannelNickname = ['dIdV','dIdV_Y','z','I','V','df','A','exc','T1',
-                    'V', 'V', 'V_bw' ,'I','I_bw','A',
-                    'A_bw', 'exc','exc_bw','df','df_bw',
-                    'dIdV','dIdV_bw','PMT','counter','counter', 'zrel','zspec','t',
-                    'EOS','EOS_Y','I_THz','I_THz_Y','I_THz','I_THz_Y',
-                    'Delay','Delay1','Delay2','Phase','Rot1','Rot2','Rot','Index','Wavelength','Intensity']
-    ChanneliScaling = [10**12,10**12,10**9,10**12,1,1,10**9,1,1,
-                    1,1,1,10**12,10**12,10**9,
-                    10**9,1,1,1,1,1,
-                    1,1,1,1,10**12,10**9,1,
-                    1,1,10**12,10**12,10**12,10**12,
-                    10**12,10**12,10**12,10**3,1,1,1,1,1,1]
-    ChannelUnit = ['pS','pS','nm','pA','V','Hz','nm','V','K',
-                    'V','V','V','pA','pA','nm',
-                    'nm','V','V','Hz','Hz','a.u.',
-                    'a.u.','V','Hz','Hz','pm','nm','s',
-                    'V','V','pA','pA','pA','pA',
-                    'ps','ps','ps','mm','deg','deg','deg','N','nm','']
+    DEFAULT_CONFIG = 'machine_config.yaml'
 
-    global SignalsListReference
-    SignalsListReference = []
+    def __init__(self,path,config_file=DEFAULT_CONFIG):
 
-    for (chName,chNickname,chScaling,chUnit) in zip(ChannelName,ChannelNickname,ChanneliScaling,ChannelUnit):
-        SignalsListReference.append({'ChannelName': chName, 'ChannelNickname': chNickname , 'ChannelScaling': chScaling, 'ChannelUnit': chUnit})
+        SignalsListReference, ParamListReference = self.load_machine_configuration_from_yaml_file(config_file)
 
-    del ChannelName,ChanneliScaling,ChannelUnit    
-    del chName,chNickname,chScaling,chUnit     
-
-    #Dictionary Parameters
-    ParamName = ['X (m)','Y (m)','Z (m)','bias','z-controller>setpoint','scan_angle','Comments','Comment01',
-                'Lock-in>Amplitude','Lock-in>Reference phase (deg)','Lock-in>Frequency (Hz)','Temperature 2>Temperature 2 (K)',
-                'Current>Current (A)','Bias>Bias (V)','z-controller>tiplift (m)',
-                'Parameter>Delay Sampling (s)','Parameter>Delay PP1 (s)','Parameter>Delay PP2 (s)','Parameter>Angle Rot1 (deg)','Parameter>Angle Rot2 (deg)','Parameter>Position Phase1 (m)','Parameter>Position_Phase1 (m)', 'Ext. VI 1>Laser>PP Frequency (MHz)']
-    ParamNickname = ['x','y','z','V','setpoint','angle','comment','comment_spec',
-                'lockin_amplitude','lockin_phase','lockin_frequency','temperature',
-                'setpoint_spec','V_spec','z_offset',
-                'Sampling','PP1','PP2','Rot1','Rot2','Phase','Phase_depricated','frep']
-    ParamScaling = [10**9,10**9,10**9,1,10**12,1,'na','na',
-                10**3,1,1,1,
-                10**12,1,10**9,
-                10**12,10**12,10**12,1,1,10**3,10**3,1] # na if not a numeric value
-    ParamUnit = ['nm','nm','nm','V','pA','°','','',
-                'mV','°','Hz','K',
-                'pA','V','nm',
-                'ps','ps','ps','deg','deg','mm','mm','MHz']
-
-
-    global ParamListReference
-    ParamListReference = []
-    
-    for (paName,paNickname,paScaling,paUnit) in zip(ParamName,ParamNickname,ParamScaling,ParamUnit):
-        ParamListReference.append({'ParamName': paName, 'ParamNickname': paNickname, 'ParamScaling': paScaling, 'ParamUnit': paUnit})
-
-    del ParamName,ParamScaling,ParamUnit    
-    del paName,paNickname,paScaling,paUnit
-
-    # constructor
-    def __init__(self,path):
-        #import os as os
-        #import numpy as np
-        #import nanonispy as nap
               
       
         # self.path = path.replace('//', '/')
@@ -98,7 +43,64 @@ class Spm:
         self.channels = [c['ChannelNickname'] for c in self.SignalsList] 
         self.header = self.napImport.header
         
+
+    def load_machine_configuration_from_yaml_file(self,filepath):
+        """
+        Load the machine configuration from a yaml file and creates SignalsListReference, ParamListReference
         
+        Inputs:
+        -------
+        filepath: str
+            Path to the yaml file
+        
+        Outputs:
+        --------
+        SignalsListReference: list
+            List of dictionaries containing the channel name, nickname, scaling and unit
+        ParamListReference: list
+            List of dictionaries containing the parameter name, nickname, scaling and unit
+        """
+
+        # Define specific loader for float values
+        mode = 'r'
+        loader = yaml.SafeLoader
+        loader.add_implicit_resolver(
+            u'tag:yaml.org,2002:float',
+            re.compile(u'''^(?:
+            [-+]?(?:[0-9][0-9_]*)\\.[0-9_]*(?:[eE][-+]?[0-9]+)?
+            |[-+]?(?:[0-9][0-9_]*)(?:[eE][-+]?[0-9]+)
+            |\\.[0-9_]+(?:[eE][-+][0-9]+)?
+            |[-+]?[0-9][0-9_]*(?::[0-5]?[0-9])+\\.[0-9_]*
+            |[-+]?\\.(?:inf|Inf|INF)
+            |\\.(?:nan|NaN|NAN))$''', re.X),
+            list(u'-+0123456789.'))
+
+        # Load the yaml file
+        with open(filepath, mode=mode) as fhandle:
+            config = yaml.load(fhandle, Loader = loader)
+        
+        # Check if the machine configuration is set to THzSTM
+        if config['MachineConfig'] != 'THzSTM':
+            warnings.warn('MachineConfig not set to THzSTM')
+
+        # Signals
+        SignalsListReference = []
+        for channel in list(config['Channels'].keys()):
+            SignalsListReference.append({'ChannelName': channel,
+                                        'ChannelNickname': config['Channels'][channel]['nickname'],
+                                        'ChannelScaling': config['Channels'][channel]['scaling'],
+                                        'ChannelUnit': config['Channels'][channel]['unit']})
+    
+        # Parameters
+        ParamListReference = []
+        for param in list(config['Parameters'].keys()):
+            ParamListReference.append({'ParamName': param,
+                                    'ParamNickname': config['Parameters'][param]['nickname'],
+                                    'ParamScaling': config['Parameters'][param]['scaling'],
+                                    'ParamUnit': config['Parameters'][param]['unit']})
+
+        return SignalsListReference, ParamListReference
+
     def __repr__(self):
         return self.path
         
