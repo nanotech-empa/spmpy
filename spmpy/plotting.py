@@ -1,3 +1,7 @@
+import os
+import matplotlib.pyplot as plt
+import matplotlib.pylab as pl
+import numpy as np
 
 
 # this function returns a rgb color code according to standard matlab colors    
@@ -19,7 +23,6 @@ def matlab_color(num):
 def specs_plot(specs,**params):
 # plot spectra in list
     
-    #import matplotlib.pyplot as plt
     
     if 'channelx' in params:
         channelx = params['channelx']
@@ -96,7 +99,6 @@ def ref_spec_plotting(ref_file,spec_files,fname_ref,fname_specs,**params):
 
 
     # Load modules
-    import os
 
     # Optional input
     if 'channelx_plot' in params:
@@ -143,9 +145,9 @@ def ref_spec_plotting(ref_file,spec_files,fname_ref,fname_specs,**params):
     plt.xlabel('x (nm)')
     plt.ylabel('y (nm)')
     
-    figDir = os.path.abspath(os.path.join(fname_ref, os.pardir))
-    if not os.path.exists(figDir):
-        os.makedirs(figDir) 
+    fig_dir = os.path.abspath(os.path.join(fname_ref, os.pardir))
+    if not os.path.exists(fig_dir):
+        os.makedirs(fig_dir) 
     
     
     plt.savefig(fname_ref+'.png', dpi=500)
@@ -154,9 +156,9 @@ def ref_spec_plotting(ref_file,spec_files,fname_ref,fname_specs,**params):
     # Plotting specs
     specs_fig = specs_plot(sp,channelx=channelx_plot,channely=channely_plot, direction = 'forward', color = col,**params);
     
-    figDir = os.path.abspath(os.path.join(fname_specs, os.pardir))
-    if not os.path.exists(figDir):
-        os.makedirs(figDir) 
+    fig_dir = os.path.abspath(os.path.join(fname_specs, os.pardir))
+    if not os.path.exists(fig_dir):
+        os.makedirs(fig_dir) 
     
     specs_fig.savefig(fname_specs+'.png', dpi=500)
     specs_fig.savefig(fname_specs+'.svg', dpi=500)
