@@ -9,25 +9,25 @@ from matplotlib.colors import LogNorm
 class Spm:
 
     #Dictionary Channels
-    ChannelName = ['LI_Demod_1_X','LI_Demod_1_Y','Z','Current','Bias','Frequency_Shift','Amplitude','Excitation','Temperature_1',
+    ChannelName = ['LIR 1 omega (A)', 'LI_Demod_1_X','LI_Demod_1_Y','Z','Current','Bias','Frequency_Shift','Amplitude','Excitation','Temperature_1',
                    'Bias (V)','Bias calc (V)', 'Bias [bwd] (V)', 'Current (A)','Current [bwd] (A)','Amplitude (m)',
                    'Amplitude [bwd] (m)', 'Excitation (V)', 'Excitation [bwd] (V)', 'Frequency Shift (Hz)', 'Frequency Shift [bwd] (Hz)',
                    'LI Demod 1 X (A)','LI Demod 1 X (A) [bwd] (A)','PMT (V)','Counter 1 (Hz)','Counter_1', 'Z rel (m)', 'Z (m)','Time (s)',
                    'LI Demod 0 X (V)','LI Demod 0 Y (V)','LI Demod 3 X (A)','LI Demod 3 Y (A)','LI_Demod_3_X','LI_Demod_3_Y',
                    'Delay Sampling (s)','Delay THz1 (s)','Delay THz2 (s)','Position Phase1 (m)','Rotation1 (deg)','Rotation2 (deg)','Rotation (deg)','Index','Wavelength','Intensity']
-    ChannelNickname = ['dIdV','dIdV_Y','z','I','V','df','A','exc','T1',
+    ChannelNickname = ['dIdV', 'dIdV','dIdV_Y','z','I','V','df','A','exc','T1',
                     'V', 'V', 'V_bw' ,'I','I_bw','A',
                     'A_bw', 'exc','exc_bw','df','df_bw',
                     'dIdV','dIdV_bw','PMT','counter','counter', 'zrel','zspec','t',
                     'EOS','EOS_Y','I_THz','I_THz_Y','I_THz','I_THz_Y',
                     'Delay','Delay1','Delay2','Phase','Rot1','Rot2','Rot','Index','Wavelength','Intensity']
-    ChanneliScaling = [10**12,10**12,10**9,10**12,1,1,10**9,1,1,
+    ChanneliScaling = [10**12,10**12,10**12,10**9,10**12,1,1,10**9,1,1,
                     1,1,1,10**12,10**12,10**9,
                     10**9,1,1,1,1,1,
                     1,1,1,1,10**12,10**9,1,
                     1,1,10**12,10**12,10**12,10**12,
                     10**12,10**12,10**12,10**3,1,1,1,1,1,1]
-    ChannelUnit = ['pS','pS','nm','pA','V','Hz','nm','V','K',
+    ChannelUnit = ['pS','pS','pS','nm','pA','V','Hz','nm','V','K',
                     'V','V','V','pA','pA','nm',
                     'nm','V','V','Hz','Hz','a.u.',
                     'a.u.','V','Hz','Hz','pm','nm','s',

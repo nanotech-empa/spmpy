@@ -1,5 +1,7 @@
 import os
 import matplotlib.pyplot as plt
+import matplotlib.pylab as pl
+import numpy as np
 
 
 # this function returns a rgb color code according to standard matlab colors    
