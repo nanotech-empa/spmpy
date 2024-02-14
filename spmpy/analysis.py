@@ -1,3 +1,4 @@
+import numpy as np
 
 def fit_parabola(
     bias,
@@ -7,7 +8,6 @@ def fit_parabola(
     fitMax=False,
     ):
     
-    #import numpy as np
 
     if single_spectrum:
         bias = np.array([bias])
@@ -95,10 +95,7 @@ def kpfm(files,**params):
         range = params['range'];
     else:
         range = [0,len(files[0].get_channel('V')[0])-1]
-    
-    import numpy as np
-    #sys.path.append('../')
-    #import analyze as an
+
     
     data = {'V': [], 'df': [], 'V_max': [], 'df_max': [], 'p_fit': [], 'err_p': [], 'V_fit': [], 'df_fit': [], 'err_V_max': [], 'err_df_max': [], 'position': []}
     
