@@ -93,8 +93,8 @@ def specs_plot(specs: list, **params):
         plt.plot(x_data,y_data+counter*offset,color = c,label = s.name)
         counter = counter + 1
     
-    plt.xlabel('%s (%s)' % (channelx,x_unit))
-    plt.ylabel('%s (%s)' % (channely,y_unit))
+    plt.xlabel(f'{channelx} ({x_unit})')
+    plt.ylabel(f'{channely} ({y_unit})')
     
     if print_legend:
         plt.legend()
@@ -179,9 +179,9 @@ def ref_spec_plotting(ref_file: str, spec_files: list, fname_ref: str, fname_spe
     plt.xlabel('x (nm)')
     plt.ylabel('y (nm)')
     
-    figDir = os.path.abspath(os.path.join(fname_ref, os.pardir))
-    if not os.path.exists(figDir):
-        os.makedirs(figDir) 
+    fig_dir = os.path.abspath(os.path.join(fname_ref, os.pardir))
+    if not os.path.exists(fig_dir):
+        os.makedirs(fig_dir) 
     
     
     plt.savefig(fname_ref+'.png', dpi=500)
@@ -190,9 +190,9 @@ def ref_spec_plotting(ref_file: str, spec_files: list, fname_ref: str, fname_spe
     # Plotting specs
     specs_fig = specs_plot(sp,channelx=channelx_plot,channely=channely_plot, direction = 'forward', color = col,**params);
     
-    figDir = os.path.abspath(os.path.join(fname_specs, os.pardir))
-    if not os.path.exists(figDir):
-        os.makedirs(figDir) 
+    fig_dir = os.path.abspath(os.path.join(fname_specs, os.pardir))
+    if not os.path.exists(fig_dir):
+        os.makedirs(fig_dir) 
     
     specs_fig.savefig(fname_specs+'.png', dpi=500)
     specs_fig.savefig(fname_specs+'.svg', dpi=500)

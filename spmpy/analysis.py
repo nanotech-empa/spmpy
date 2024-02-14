@@ -4,8 +4,8 @@ def fit_parabola(
         bias,
         df,
         single_spectrum: bool = False,
-        fitMin: bool = False,
-        fitMax: bool = False,
+        fit_min: bool = False,
+        fit_max: bool = False,
     ):
     
     """
@@ -37,9 +37,7 @@ def fit_parabola(
         err_df_max: List of uncertainties of the Y coordinate of the extrema of each parabolas
 
     """
-    
-    
-
+ 
     if single_spectrum:
         bias = np.array([bias])
         df = np.array([df])
@@ -52,11 +50,11 @@ def fit_parabola(
     err_df_max = np.zeros(len(bias))
 
     for i in range(len(bias)):
-        if not fitMin and not fitMax:
+        if not fit_min and not fit_max:
             (p, cov) = np.polyfit(bias[i], df[i], 2, cov=True)
-        elif fitMin and not fitMax:
+        elif fit_min and not fit_max:
 
-            fit_i = np.where(bias[i] > fitMin[i])[0]
+            fit_i = np.where(bias[i] > fit_min[i])[0]
             (p, cov) = np.polyfit(bias[i, fit_i], df[i, fit_i], 2,
                                   cov=True)
         p_fit[i] = p
@@ -184,7 +182,7 @@ def kpfm(files: list, **params):
         data['position'].append([x,y])
          
                 
-    (p_fit,err_p,df_fit,V_max,err_V_max,df_max,err_df_max) = fit_parabola(np.array(data['V'])[:,range[0]:range[1]].tolist(),np.array(data['df'])[:,range[0]:range[1]].tolist(),single_spectrum=False,fitMin=False,fitMax=False)
+    (p_fit,err_p,df_fit,V_max,err_V_max,df_max,err_df_max) = fit_parabola(np.array(data['V'])[:,range[0]:range[1]].tolist(),np.array(data['df'])[:,range[0]:range[1]].tolist(),single_spectrum=False,fit_min=False,fit_max=False)
     
     data['p_fit'] = p_fit;
     data['err_p'] = err_p;
@@ -197,14 +195,14 @@ def kpfm(files: list, **params):
     
     if 'df_bw' in data.keys():
     
-        (p_fit_bw,err_p_bw,df_fit_bw,V_max_bw,err_V_max_bw,df_max_bw,err_df_max_bw) = fit_parabola(np.array(data['V_bw'])[:,range[0]:range[1]].tolist(),np.array(data['df_bw'])[:,range[0]:range[1]].tolist(),single_spectrum=False,fitMin=False,fitMax=False)
+        (p_fit_bw,err_p_bw,df_fit_bw,v_max_bw,err_v_max_bw,df_max_bw,err_df_max_bw) = fit_parabola(np.array(data['V_bw'])[:,range[0]:range[1]].tolist(),np.array(data['df_bw'])[:,range[0]:range[1]].tolist(),single_spectrum=False,fit_min=False,fit_max=False)
         
         data['p_fit_bw'] = p_fit_bw;
         data['err_p_bw'] = err_p_bw;
         data['V_fit_bw'] = np.array(data['V_bw'])[:,range[0]:range[1]].tolist()
         data['df_fit_bw'] = df_fit_bw;
-        data['V_max_bw'] = V_max_bw;
-        data['err_V_max_bw'] = err_V_max_bw;
+        data['V_max_bw'] = v_max_bw;
+        data['err_V_max_bw'] = err_v_max_bw;
         data['df_max_bw'] = df_max_bw;
         data['err_df_max_bw'] = err_df_max_bw;
         
