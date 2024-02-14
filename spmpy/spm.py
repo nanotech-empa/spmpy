@@ -15,6 +15,22 @@ class Spm:
 
     def __init__(self,path,config_file=DEFAULT_CONFIG):
 
+    # constructor
+    def __init__(self, path: str):
+        """
+        Spm constructor
+
+        Parameters
+        ----------
+        path : str
+            SPM filepath.
+
+        Returns
+        -------
+        None.
+
+        """
+              
         config = self.load_machine_configuration_from_yaml_file(config_file)
 
       
@@ -102,7 +118,34 @@ class Spm:
         return self.path
         
     #get channel
-    def get_channel(self,channel,direction = 'forward', flatten = False, offset = False,zero = False):
+    def get_channel(self, 
+                    channel: str, 
+                    direction: str = 'forward', 
+                    flatten: bool = False, 
+                    offset: bool = False, 
+                    zero: bool = False):
+        """
+        Returns the measurement values and the channel unit.
+
+        Parameters
+        ----------
+        channel : str
+            Name of the channel stored in the reference config file or in the NANONIS file.
+        direction : str, optional
+            Measurement direction. It can only be forward or backward. The default is 'forward'.
+        flatten : bool, optional
+            Substract background plane from image data. The default is False.
+        offset : bool, optional
+            Substract constant offset = mean value. The default is False.
+        zero : bool, optional
+            Substract constant offset = minimum value. The default is False.
+
+        Returns
+        -------
+        tuple
+            Measurement values and channel unit
+
+        """
 
         
         if self.type == 'scan':
@@ -149,7 +192,21 @@ class Spm:
         return
     
     #get parameter            
-    def get_param(self,param):
+    def get_param(self, param: str):
+        """
+        Returns the parameter value and the parameter unit.
+
+        Parameters
+        ----------
+        param : str
+            Name of the parameter stored in the reference config file or in the NANONIS file.
+
+        Returns
+        -------
+        TYPE
+            DESCRIPTION.
+
+        """
  
         if any(d['ParamNickname'] == param for d in self.ParamListReference):
             paNum = [d['ParamNickname'] for d in self.ParamListReference].index(param)
@@ -178,7 +235,21 @@ class Spm:
               
         
     # print essential parameters for plotting  
-    def print_params(self, show = True):
+    def print_params(self, show: bool = True):
+        """
+        Print essential parameters for plotting
+
+        Parameters
+        ----------
+        show : bool, optional
+            Whether label if printed. The default is True.
+
+        Returns
+        -------
+        label : list
+            Set of important parameters.
+
+        """
         
         label = []
         
@@ -247,43 +318,48 @@ class Spm:
     
     # plot
     def plot(self, **params):
+        """
+        Plots a channel of the Spm objects
+
+        Parameters
+        ----------
+        **params : TYPE
+            Optional parameters for .sxm files:
+                channel: Name of the channel that is plotted
+                direction: Measurement direction (forward or backward)
+                flatten: Boolean whether the plane subtraction
+                offset: Boolean whether the constant offset (mean value) should be subtracted
+                cmap: Name of color map
+                clim: Lower bound and upper bound of the color limits
+                log: Boolean whether the color scale is logarithmic
+                show_params: Whether in the title essential parameters are shown
+                show: Whether the plot is shown
+                save: Whether plot is saved
+                save_name: Name of the saved plot
+                close_fig: Whether figure is closed at the end
+                save_format: Save format
+                zero: Boolean whether the constant offset (minimum value) should be subtracted
+
+            Optional parameters for .dat files:
+                channelx: Name of the X channel
+                channely: Name of the Y channel
+                direction: Measurement direction (forward or backward)
+                log: Boolean whether the color scale is logarithmic
+                loglog: Log-log plot
+                show_params: Whether in the title essential parameters are shown
+                show: Whether the plot is shown
+                save: Whether plot is saved
+                save_name: Name of the saved plot
+                close_fig: Whether figure is closed at the end
+                save_format: Save format
+
+        Returns
+        -------
+        fig : matplotlib.pyplot.Figure
+            Figure of a channel of the Spm object
 
         """
-        Plot the .sxm and ..png files.
 
-        Optional parameters for .sxm files:
-        channel
-        direction
-        flatten
-        offset
-        cmap
-        clim
-        log
-        show_params
-        show
-        save
-        save_name
-        close_fig
-        save_format
-        zero
-
-        Optional parameters for .dat files:
-        channelx
-        channely
-        direction
-        log
-        loglog
-        show_params
-        show
-        save
-        save_name
-        close_fig
-        save_format
-
-        """
-        
-
-        
         #cmaps = sorted(m for m in plt.cm.datad)
         # ['Accent', 'Accent_r', 'Blues', 'Blues_r', 'BrBG', 'BrBG_r', 'BuGn', 'BuGn_r', 'BuPu', 'BuPu_r', 'CMRmap', 'CMRmap_r', 'Dark2', 'Dark2_r', 'GnBu', 'GnBu_r', 'Greens', 'Greens_r', 'Greys', 'Greys_r', 'OrRd', 'OrRd_r', 'Oranges', 'Oranges_r', 'PRGn', 'PRGn_r', 'Paired', 'Paired_r', 'Pastel1', 'Pastel1_r', 'Pastel2', 'Pastel2_r', 'PiYG', 'PiYG_r', 'PuBu', 'PuBuGn', 'PuBuGn_r', 'PuBu_r', 'PuOr', 'PuOr_r', 'PuRd', 'PuRd_r', 'Purples', 'Purples_r', 'RdBu', 'RdBu_r', 'RdGy', 'RdGy_r', 'RdPu', 'RdPu_r', 'RdYlBu', 'RdYlBu_r', 'RdYlGn', 'RdYlGn_r', 'Reds', 'Reds_r', 'Set1', 'Set1_r', 'Set2', 'Set2_r', 'Set3', 'Set3_r', 'Spectral', 'Spectral_r', 'Wistia', 'Wistia_r', 'YlGn', 'YlGnBu', 'YlGnBu_r', 'YlGn_r', 'YlOrBr', 'YlOrBr_r', 'YlOrRd', 'YlOrRd_r', 'afmhot', 'afmhot_r', 'autumn', 'autumn_r', 'binary', 'binary_r', 'bone', 'bone_r', 'brg', 'brg_r', 'bwr', 'bwr_r', 'cool', 'cool_r', 'coolwarm', 'coolwarm_r', 'copper', 'copper_r', 'cubehelix', 'cubehelix_r', 'flag', 'flag_r', 'gist_earth', 'gist_earth_r', 'gist_gray', 'gist_gray_r', 'gist_heat', 'gist_heat_r', 'gist_ncar', 'gist_ncar_r', 'gist_rainbow', 'gist_rainbow_r', 'gist_stern', 'gist_stern_r', 'gist_yarg', 'gist_yarg_r', 'gnuplot', 'gnuplot2', 'gnuplot2_r', 'gnuplot_r', 'gray', 'gray_r', 'hot', 'hot_r', 'hsv', 'hsv_r', 'jet', 'jet_r', 'nipy_spectral', 'nipy_spectral_r', 'ocean', 'ocean_r', 'pink', 'pink_r', 'prism', 'prism_r', 'rainbow', 'rainbow_r', 'seismic', 'seismic_r', 'spectral', 'spectral_r', 'spring', 'spring_r', 'summer', 'summer_r', 'terrain', 'terrain_r', 'winter', 'winter_r']
         

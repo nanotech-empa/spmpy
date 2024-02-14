@@ -4,8 +4,21 @@ import matplotlib.pylab as pl
 import numpy as np
 
 
-# this function returns a rgb color code according to standard matlab colors    
-def matlab_color(num):
+def matlab_color(num: int):
+    """
+    Returns an RGB color code according to standard MatLab colors
+
+    Parameters
+    ----------
+    num : int
+        Value iterating between 0 and 6.
+
+    Returns
+    -------
+    list
+        List with RGB percentages.
+
+    """
     if num > 6:
         num = np.mod(num,7)
 
@@ -20,8 +33,23 @@ def matlab_color(num):
     return colors[np.round(num)]
 
 
-def specs_plot(specs,**params):
-# plot spectra in list
+def specs_plot(specs: list, **params):
+    """
+    Plots several spectra in line plot.
+
+    Parameters
+    ----------
+    specs : list
+        List of Spm objects that are generated from DAT files.
+    **params : TODO
+
+    Returns
+    -------
+    fig : matplotlib.pyplot.Figure
+        Spectra figure.
+
+    """
+    # plot spectra in list
     
     
     if 'channelx' in params:
@@ -77,26 +105,32 @@ def specs_plot(specs,**params):
 
 
 
-def ref_spec_plotting(ref_file,spec_files,fname_ref,fname_specs,**params):
+def ref_spec_plotting(ref_file: str, spec_files: list, fname_ref: str, fname_specs: str, **params):
     """
-    Plots sxm reference image with spectra locations and multiple dat spectra
+    Plots several spectra in line plot together with respective spectra locations.
 
-    Input:
-    ref_file: filename of reference sxm image
-    spec_files: list of filenames of dat spectra
-    fname_ref: filename of saved reference image
-    fname_specs: filename of saved spectra image
+    Parameters
+    ----------
+    ref_file : str
+        Filename of reference sxm image
+    spec_files : list
+        List of filenames of dat spectra.
+    fname_ref : str
+        Filename of saved reference image.
+    fname_specs : str
+        Filename of saved spectra image.
+    **params : TYPE
+        channelx_plot: channel to plot on x-axis of dat spectra (default: V)
+        channely_plot: channel to plot on y-axis of dat spectra (default: dIdV)
+        offset: offset between spectra (default: 0)
+        annotate_spec: annotate spectra with numbers.
 
-    Optional input:
-    channelx_plot: channel to plot on x-axis of dat spectra (default: V)
-    channely_plot: channel to plot on y-axis of dat spectra (default: dIdV)
-    offset: offset between spectra (default: 0)
-    annotate_spec: annotate spectra with numbers
+    Returns
+    -------
+    specs_fig : matplotlib.pyplot.Figure
+        Spectra figure with respective spectra locations.
 
-    Output:
-    specs_fig: figure of spectra
     """
-
 
     # Load modules
 
