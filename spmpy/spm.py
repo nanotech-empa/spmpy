@@ -4,77 +4,19 @@ import numpy as np
 import spiepy
 import matplotlib.pyplot as plt
 from matplotlib.colors import LogNorm
+import yaml
+import re
+import warnings
 
 
 class Spm:
 
-    #Dictionary Channels
-    channel_name = ['LIR 1 omega (A)', 'LI_Demod_1_X','LI_Demod_1_Y','Z','Current','Bias','Frequency_Shift','Amplitude','Excitation','Temperature_1',
-                   'Bias (V)','Bias calc (V)', 'Bias [bwd] (V)', 'Current (A)','Current [bwd] (A)','Amplitude (m)',
-                   'Amplitude [bwd] (m)', 'Excitation (V)', 'Excitation [bwd] (V)', 'Frequency Shift (Hz)', 'Frequency Shift [bwd] (Hz)',
-                   'LI Demod 1 X (A)','LI Demod 1 X (A) [bwd] (A)','PMT (V)','Counter 1 (Hz)','Counter_1', 'Z rel (m)', 'Z (m)','Time (s)',
-                   'LI Demod 0 X (V)','LI Demod 0 Y (V)','LI Demod 3 X (A)','LI Demod 3 Y (A)','LI_Demod_3_X','LI_Demod_3_Y',
-                   'Delay Sampling (s)','Delay THz1 (s)','Delay THz2 (s)','Position Phase1 (m)','Rotation1 (deg)','Rotation2 (deg)','Rotation (deg)','Index','Wavelength','Intensity']
-    channel_nickname = ['dIdV', 'dIdV','dIdV_Y','z','I','V','df','A','exc','T1',
-                    'V', 'V', 'V_bw' ,'I','I_bw','A',
-                    'A_bw', 'exc','exc_bw','df','df_bw',
-                    'dIdV','dIdV_bw','PMT','counter','counter', 'zrel','zspec','t',
-                    'EOS','EOS_Y','I_THz','I_THz_Y','I_THz','I_THz_Y',
-                    'Delay','Delay1','Delay2','Phase','Rot1','Rot2','Rot','Index','Wavelength','Intensity']
-    channel_scaling = [10**12,10**12,10**12,10**9,10**12,1,1,10**9,1,1,
-                    1,1,1,10**12,10**12,10**9,
-                    10**9,1,1,1,1,1,
-                    1,1,1,1,10**12,10**9,1,
-                    1,1,10**12,10**12,10**12,10**12,
-                    10**12,10**12,10**12,10**3,1,1,1,1,1,1]
-    channel_unit = ['pS','pS','pS','nm','pA','V','Hz','nm','V','K',
-                    'V','V','V','pA','pA','nm',
-                    'nm','V','V','Hz','Hz','a.u.',
-                    'a.u.','V','Hz','Hz','pm','nm','s',
-                    'V','V','pA','pA','pA','pA',
-                    'ps','ps','ps','mm','deg','deg','deg','N','nm','']
+    DEFAULT_CONFIG = os.path.dirname(os.path.abspath(__file__)) + '/machine_config.yaml'
 
-    global SignalsListReference
-    SignalsListReference = []
+    def __init__(self,path,config_file=DEFAULT_CONFIG):
 
-    for (chName,chNickname,chScaling,chUnit) in zip(channel_name,channel_nickname,channel_scaling,channel_unit):
-        SignalsListReference.append({'ChannelName': chName, 'ChannelNickname': chNickname , 'ChannelScaling': chScaling, 'ChannelUnit': chUnit})
+        config = self.load_machine_configuration_from_yaml_file(config_file)
 
-    del channel_name,channel_scaling,channel_unit    
-    del chName,chNickname,chScaling,chUnit     
-
-    #Dictionary Parameters
-    ParamName = ['X (m)','Y (m)','Z (m)','bias','z-controller>setpoint','scan_angle','Comments','Comment01',
-                'Lock-in>Amplitude','Lock-in>Reference phase (deg)','Lock-in>Frequency (Hz)','Temperature 2>Temperature 2 (K)',
-                'Current>Current (A)','Bias>Bias (V)','z-controller>tiplift (m)',
-                'Parameter>Delay Sampling (s)','Parameter>Delay PP1 (s)','Parameter>Delay PP2 (s)','Parameter>Angle Rot1 (deg)','Parameter>Angle Rot2 (deg)','Parameter>Position Phase1 (m)','Parameter>Position_Phase1 (m)', 'Ext. VI 1>Laser>PP Frequency (MHz)']
-    ParamNickname = ['x','y','z','V','setpoint','angle','comment','comment_spec',
-                'lockin_amplitude','lockin_phase','lockin_frequency','temperature',
-                'setpoint_spec','V_spec','z_offset',
-                'Sampling','PP1','PP2','Rot1','Rot2','Phase','Phase_depricated','frep']
-    ParamScaling = [10**9,10**9,10**9,1,10**12,1,'na','na',
-                10**3,1,1,1,
-                10**12,1,10**9,
-                10**12,10**12,10**12,1,1,10**3,10**3,1] # na if not a numeric value
-    ParamUnit = ['nm','nm','nm','V','pA','°','','',
-                'mV','°','Hz','K',
-                'pA','V','nm',
-                'ps','ps','ps','deg','deg','mm','mm','MHz']
-
-
-    global ParamListReference
-    ParamListReference = []
-    
-    for (paName,paNickname,paScaling,paUnit) in zip(ParamName,ParamNickname,ParamScaling,ParamUnit):
-        ParamListReference.append({'ParamName': paName, 'ParamNickname': paNickname, 'ParamScaling': paScaling, 'ParamUnit': paUnit})
-
-    del ParamName,ParamScaling,ParamUnit    
-    del paName,paNickname,paScaling,paUnit
-
-    # constructor
-    def __init__(self,path):
-
-              
       
         # self.path = path.replace('//', '/')
         abspath = os.path.abspath(path)
@@ -91,19 +33,71 @@ class Spm:
         else:
             print('Datatype not supported.')
             return;
-            
-        ch = []    
-        for key in self.napImport.signals:
-            try:
-                ch.append([d['ChannelName'] for d in SignalsListReference].index(key))
-            except:
-                pass;    
- 
-        self.SignalsList = [SignalsListReference[i] for i in ch] #List of all recorded channels
-        self.channels = [c['ChannelNickname'] for c in self.SignalsList] 
+    
+        
+        self.SignalsList = []
+        for key in self.napImport.signals.keys():
+            in_config = key in config["Channels"]
+            self.SignalsList.append({
+                'ChannelName': key,
+                'ChannelNickname': config["Channels"][key]["nickname"] if in_config else key,
+                'ChannelScaling': config["Channels"][key]["scaling"] if in_config else 1.0,
+                'ChannelUnit': config["Channels"][key]["unit"] if in_config else 'N/A',
+            })
+
+        self.channels = [c['ChannelNickname'] for c in self.SignalsList]
+
+        self.ParamListReference = []
+        for key in config["Parameters"].keys():
+            self.ParamListReference.append({
+                'ParamName': key,
+                'ParamNickname': config["Parameters"][key]["nickname"],
+                'ParamScaling': config["Parameters"][key]["scaling"],
+                'ParamUnit': config["Parameters"][key]["unit"],
+            })
+
         self.header = self.napImport.header
         
+
+    def load_machine_configuration_from_yaml_file(self,filepath):
+        """
+        Load the machine configuration from a yaml file.
         
+        Inputs:
+        -------
+        filepath: str
+            Path to the yaml file
+        
+        Outputs:
+        --------
+        config: dict
+            Dictionary containing the machine configuration
+        """
+
+        # Define specific loader for float values
+        mode = 'r'
+        loader = yaml.SafeLoader
+        loader.add_implicit_resolver(
+            u'tag:yaml.org,2002:float',
+            re.compile(u'''^(?:
+            [-+]?(?:[0-9][0-9_]*)\\.[0-9_]*(?:[eE][-+]?[0-9]+)?
+            |[-+]?(?:[0-9][0-9_]*)(?:[eE][-+]?[0-9]+)
+            |\\.[0-9_]+(?:[eE][-+][0-9]+)?
+            |[-+]?[0-9][0-9_]*(?::[0-5]?[0-9])+\\.[0-9_]*
+            |[-+]?\\.(?:inf|Inf|INF)
+            |\\.(?:nan|NaN|NAN))$''', re.X),
+            list(u'-+0123456789.'))
+
+        # Load the yaml file
+        with open(filepath, mode=mode) as fhandle:
+            config = yaml.load(fhandle, Loader = loader)
+        
+        # Check if the machine configuration is set to THzSTM
+        if config['MachineConfig'] != 'THzSTM':
+            warnings.warn('MachineConfig not set to THzSTM')
+
+        return config
+
     def __repr__(self):
         return self.path
         
@@ -157,13 +151,13 @@ class Spm:
     #get parameter            
     def get_param(self,param):
  
-        if any(d['ParamNickname'] == param for d in ParamListReference):
-            paNum = [d['ParamNickname'] for d in ParamListReference].index(param)
+        if any(d['ParamNickname'] == param for d in self.ParamListReference):
+            paNum = [d['ParamNickname'] for d in self.ParamListReference].index(param)
 
-            if ParamListReference[paNum]['ParamScaling'] == 'na':
-                return self.napImport.header[ParamListReference[paNum]['ParamName']]
+            if self.ParamListReference[paNum]['ParamScaling'] is None:
+                return self.napImport.header[self.ParamListReference[paNum]['ParamName']]
             else:
-                return (float(self.napImport.header[ParamListReference[paNum]['ParamName']])*ParamListReference[paNum]['ParamScaling'],ParamListReference[paNum]['ParamUnit'])
+                return (float(self.napImport.header[self.ParamListReference[paNum]['ParamName']])*self.ParamListReference[paNum]['ParamScaling'],self.ParamListReference[paNum]['ParamUnit'])
             
         
         elif param == 'width' or param == 'height':
