@@ -9,7 +9,7 @@ from matplotlib.colors import LogNorm
 class Spm:
 
     #Dictionary Channels
-    _channel_name = ['LIR 1 omega (A)', 'LI_Demod_1_X','LI_Demod_1_Y','Z','Current','Bias','Frequency_Shift','Amplitude','Excitation','Temperature_1',
+    channel_name = ['LIR 1 omega (A)', 'LI_Demod_1_X','LI_Demod_1_Y','Z','Current','Bias','Frequency_Shift','Amplitude','Excitation','Temperature_1',
                    'Bias (V)','Bias calc (V)', 'Bias [bwd] (V)', 'Current (A)','Current [bwd] (A)','Amplitude (m)',
                    'Amplitude [bwd] (m)', 'Excitation (V)', 'Excitation [bwd] (V)', 'Frequency Shift (Hz)', 'Frequency Shift [bwd] (Hz)',
                    'LI Demod 1 X (A)','LI Demod 1 X (A) [bwd] (A)','PMT (V)','Counter 1 (Hz)','Counter_1', 'Z rel (m)', 'Z (m)','Time (s)',
@@ -37,10 +37,10 @@ class Spm:
     global SignalsListReference
     SignalsListReference = []
 
-    for (chName,chNickname,chScaling,chUnit) in zip(_channel_name,channel_nickname,channel_scaling,channel_unit):
+    for (chName,chNickname,chScaling,chUnit) in zip(channel_name,channel_nickname,channel_scaling,channel_unit):
         SignalsListReference.append({'ChannelName': chName, 'ChannelNickname': chNickname , 'ChannelScaling': chScaling, 'ChannelUnit': chUnit})
 
-    del _channel_name,channel_scaling,channel_unit    
+    del channel_name,channel_scaling,channel_unit    
     del chName,chNickname,chScaling,chUnit     
 
     #Dictionary Parameters
