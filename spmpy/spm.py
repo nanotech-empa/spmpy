@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import LogNorm
 import yaml
 import re
+import warnings
 
 
 class Spm:
@@ -60,7 +61,7 @@ class Spm:
 
     def load_machine_configuration_from_yaml_file(self,filepath):
         """
-        Load the machine configuration from a yaml file and creates SignalsListReference, ParamListReference
+        Load the machine configuration from a yaml file.
         
         Inputs:
         -------
@@ -69,10 +70,8 @@ class Spm:
         
         Outputs:
         --------
-        SignalsListReference: list
-            List of dictionaries containing the channel name, nickname, scaling and unit
-        ParamListReference: list
-            List of dictionaries containing the parameter name, nickname, scaling and unit
+        config: dict
+            Dictionary containing the machine configuration
         """
 
         # Define specific loader for float values
@@ -96,7 +95,6 @@ class Spm:
         # Check if the machine configuration is set to THzSTM
         if config['MachineConfig'] != 'THzSTM':
             warnings.warn('MachineConfig not set to THzSTM')
-
 
         return config
 
