@@ -1,12 +1,43 @@
 import numpy as np
 
 def fit_parabola(
-    bias,
-    df,
-    single_spectrum=False,
-    fitMin=False,
-    fitMax=False,
+        bias,
+        df,
+        single_spectrum: bool = False,
+        fitMin: bool = False,
+        fitMax: bool = False,
     ):
+    
+    """
+    Fits parabolas to a list of df vs Bias spectrum
+
+    Parameters
+    ----------
+    bias : numpy.array
+        1D or 2D array of bias voltage values
+    df : numpy.array
+        1D or 2D array of corresponding frequency shift values.
+    single_spectrum : bool
+        If bias and df is only one spectrum
+    fitMin : TODO
+        TODO
+    fitMax : TODO
+        TODO
+    **params : TODO
+
+    Returns
+    -------
+    tuple
+        p_fit: List of second degree polyfits (p_fit = [a,b,c], where y = ax**2 + bx + c)
+        err_p: List of uncertainties of the polyfit
+        df_fit: List of Y values of the fitted parabola
+        bias_max: List of X coordinate of the extrema of each parabolas
+        err_bias_max: List of uncertainties of the X coordinate of the extrema of each parabolas
+        df_max: List of Y coordinate of the extrema of each parabolas
+        err_df_max: List of uncertainties of the Y coordinate of the extrema of each parabolas
+
+    """
+    
     
 
     if single_spectrum:
@@ -61,7 +92,24 @@ def fit_parabola(
         err_df_max,
         )
 
-def relative_position(img,spec,**params):
+def relative_position(img, spec, **params):
+    """
+    Returns the (X,Y) position of the spectrum with respect to the position of the image origin.
+
+    Parameters
+    ----------
+    img : Spm
+        Spm object of the SXM file.
+    spec : Spm
+        Spm object of the DAT file.
+    **params : TODO
+
+    Returns
+    -------
+    list
+        Coordinates of the position of the spectrum with respect to the position of the image origin.
+
+    """
     
     #width = ref.get_param('width')
     #height = ref.get_param('height')
@@ -88,8 +136,22 @@ def relative_position(img,spec,**params):
     return [x_rel,y_rel]
 
     
-# returns dict list of fitted kpfm parabolas for list of spm objects
-def kpfm(files,**params):
+def kpfm(files: list, **params):
+    """
+    Returns dict of fitted kpfm parabolas for list of spm objects
+
+    Parameters
+    ----------
+    files : list
+        List of Spm objects.
+    **params : TODO
+
+    Returns
+    -------
+    data: dict
+        Dictionary of the parabola fit parameters returned by fit_parabola function.
+
+    """
     
     if 'range' in params:
         range = params['range'];
