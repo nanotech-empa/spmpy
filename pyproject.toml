@@ -6,7 +6,7 @@ build-backend = "flit_core.buildapi"
 name = "spmpy"
 version = "0.1.0"
 license = {file = "LICENSE"}
-description = "A package to handle nanonis files"
+description = "A package to read and display nanonis files"
 
 requires-python = ">=3.9"
 readme = "README.md"
