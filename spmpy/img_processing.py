@@ -3,7 +3,7 @@ Collection of functions for image processing
 
 """
 
-class Image_Processing():
+class ImageProcessing():
 
     def __init__(self):
         pass
