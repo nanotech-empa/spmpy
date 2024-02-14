@@ -28,7 +28,7 @@ dependencies = [
     "matplotlib",
     "nanonispy",
     "numpy",
-    "spiepie",
+    "spiepy",
 ]
 
 [project.optional-dependencies]
