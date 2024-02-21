@@ -620,3 +620,8 @@ class Spm:
                 fig.savefig(fname+'.'+save_format,dpi=500)
 
             return fig
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 2693b7bd8b785ab5a0b54a62164694ad865a7cd9
