@@ -15,10 +15,9 @@ class Spm:
 
     DEFAULT_CONFIG = os.path.dirname(os.path.abspath(__file__)) + '/machine_config.yaml'
 
-    def __init__(self,path,config_file=DEFAULT_CONFIG):
-
     # constructor
-    def __init__(self, path: str):
+    def __init__(self,path: str,config_file=DEFAULT_CONFIG):
+
         """
         Spm constructor
 
@@ -280,8 +279,9 @@ class Spm:
 
             label.append(f'I = {set_point[0]:.0f}{set_point[1]}')
             label.append(f'bias = {bias[0]:.2f}{bias[1]}')
-            label.append(f'size: {width[0]}{width[1]} x {height[0]:.1f}{height[1]} ({angle[0]:.0f}{angle[1]})')
+            #label.append(f'size: {width[0]}{width[1]} x {height[0]:.1f}{height[1]} ({angle[0]:.0f}{angle[1]})')
             label.append(f'comment: {comment}')
+            label.append(f'Date: {self.header["rec_date"]} - {self.header["rec_time"]}')
 
 
         elif self.type == 'spec':
@@ -307,6 +307,7 @@ class Spm:
 
             label.append(f'setpoint: I = {set_point[0]:.0f}{set_point[1]}, V = {bias[0]:.1f}{bias[1]}')
             label.append(f'comment: {comment}')
+            label.append(f'Date: {self.header["Saved Date"]}')
 
         label.append(f'path: {self.path}')
         label = '\n'.join(label)
@@ -620,8 +621,46 @@ class Spm:
                 fig.savefig(fname+'.'+save_format,dpi=500)
 
             return fig
-<<<<<<< HEAD
-=======
 
 
->>>>>>> 2693b7bd8b785ab5a0b54a62164694ad865a7cd9
+
+    def importall(FilePath: str,FilePrefix = '',ImportOnly = ''):
+        """
+        Returns a list of Spm objects from a specific folder
+
+        Parameters
+        ----------
+        FilePath : str
+            File path of local directory containing Nanonis files
+        FilePrefix : str
+            Optional name of file base to be imported e.g. 'img_'
+        ImportOnly : 'scan' or 'spec'
+            Optional specifier for file type to be imported
+
+        Returns
+        -------
+        list of Spm objects
+
+        """
+        
+        from os import walk
+        
+        files = []
+        NumSpec = 0
+        NumScan = 0
+        
+        
+        for root, dirs, filenames in walk(FilePath):
+            for file in filenames:
+                if file.endswith(".sxm") and file.startswith(FilePrefix):
+                    if not(ImportOnly == 'spec'):
+                        files.append(Spm(root + '/' + file))
+                        NumScan = NumScan + 1
+                elif file.endswith(".dat") and file.startswith(FilePrefix):
+                    if not(ImportOnly == 'scan'):
+                        files.append(Spm(root + '/' + file))
+                        NumSpec = NumSpec + 1   
+            
+        print(str(len(files)) + ' files imported; ' + str(NumScan) + ' scan(s) and ' + str(NumSpec) + ' spectra')
+
+        return files
