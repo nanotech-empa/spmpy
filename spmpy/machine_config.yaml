@@ -280,7 +280,7 @@ Parameters:
       nickname: lockin_amplitude
       scaling: 1e3
       unit: mV
-  Lock-in>Reference phase (deg):
+  Lock-in>Reference phase D1 (deg):
       nickname: lockin_phase
       scaling: 1
       unit: deg
