@@ -275,37 +275,39 @@ class Spm:
         label = []
 
         if self.type == "scan":
-            parameters = {'fb_enable':"z-controller>controller status",
-                          'bias':"V",
-                          'set_point':'setpoint',
-                          'z_offset':'z_offset',
-                          'comment':'comments',
-                          'height':'height',
-                          'width':'width',
-                          'angle':'angle',
-                          'controller':'z-controller>controller name',
-                          'date':'rec_date',
-                          'time':'rec_time',
-                          }
-            for key,value in parameters.items():
+            parameters = {
+                "fb_enable": "z-controller>controller status",
+                "bias": "V",
+                "set_point": "setpoint",
+                "z_offset": "z_offset",
+                "comment": "comments",
+                "height": "height",
+                "width": "width",
+                "angle": "angle",
+                "controller": "z-controller>controller name",
+                "date": "rec_date",
+                "time": "rec_time",
+            }
+            for key, value in parameters.items():
                 try:
                     parameters[key] = self.get_param(value)
                 except Exception as err:
-                    if type(err) == type(KeyError()): print(f'Missing Header Key, {err}')
-                    parameters[key] = 'N/A'
+                    if type(err) == type(KeyError()):
+                        print(f"Missing Header Key, {err}")
+                    parameters[key] = "N/A"
 
-            fb_enable = parameters['fb_enable']
-            
-            bias = parameters['bias']
-            set_point = parameters['set_point']
-            z_offset = parameters['z_offset']
-            date = parameters['date']
-            time = parameters['time']
-            comment = parameters['comment']
-            controller = parameters['controller']
-            height = parameters['height']
-            width = parameters['width']
-            angle = parameters['angle']
+            fb_enable = parameters["fb_enable"]
+
+            bias = parameters["bias"]
+            set_point = parameters["set_point"]
+            z_offset = parameters["z_offset"]
+            date = parameters["date"]
+            time = parameters["time"]
+            comment = parameters["comment"]
+            parameters["controller"]
+            parameters["height"]
+            parameters["width"]
+            parameters["angle"]
             if fb_enable == "OFF":
                 label.append("constant height")
                 label.append(f"z-offset: {z_offset[0]:.3f}{z_offset[1]}")
@@ -320,37 +322,39 @@ class Spm:
             label.append(f"bias = {bias[0]:.2f}{bias[1]}")
             # label.append(f'size: {width[0]}{width[1]} x {height[0]:.1f}{height[1]} ({angle[0]:.0f}{angle[1]})')
             label.append(f"comment: {comment}")
-            label.append(f'Date: {date} - {time}')
+            label.append(f"Date: {date} - {time}")
 
         elif self.type == "spec":
-            parameters = {'fb_enable':"Z-Ctrl hold",
-                          'bias':"V_spec",
-                          'set_point':"setpoint_spec",
-                          'z_offset':'Bias Spectroscopy>Z offset (m)',
-                          'comment':'comments',
-                          'lockin_amplitude':'lockin_amplitude',
-                          'lockin_phase':'lockin_phase',
-                          'lockin_frequency':'lockin_frequency',
-                          'lockin_status':'Lock-in>Lock-in status',
-                          'date':'Saved Date',
-                          }
-            for key,value in parameters.items():
+            parameters = {
+                "fb_enable": "Z-Ctrl hold",
+                "bias": "V_spec",
+                "set_point": "setpoint_spec",
+                "z_offset": "Bias Spectroscopy>Z offset (m)",
+                "comment": "comments",
+                "lockin_amplitude": "lockin_amplitude",
+                "lockin_phase": "lockin_phase",
+                "lockin_frequency": "lockin_frequency",
+                "lockin_status": "Lock-in>Lock-in status",
+                "date": "Saved Date",
+            }
+            for key, value in parameters.items():
                 try:
                     parameters[key] = self.get_param(value)
                 except Exception as err:
-                    if type(err) == type(KeyError()): print(f'Missing Header Key, {err}')
-                    parameters[key] = 'N/A'
+                    if type(err) == type(KeyError()):
+                        print(f"Missing Header Key, {err}")
+                    parameters[key] = "N/A"
 
-            fb_enable = parameters['fb_enable']
-            bias = parameters['bias']
-            set_point = parameters['set_point']
-            z_offset = parameters['z_offset']
-            date = parameters['date']
-            lockin_status = parameters['lockin_status']
-            lockin_amplitude = parameters['lockin_amplitude']
-            lockin_phase = parameters['lockin_phase']
-            lockin_frequency = parameters['lockin_frequency']
-            comment = parameters['comment']
+            fb_enable = parameters["fb_enable"]
+            bias = parameters["bias"]
+            set_point = parameters["set_point"]
+            z_offset = parameters["z_offset"]
+            date = parameters["date"]
+            parameters["lockin_status"]
+            lockin_amplitude = parameters["lockin_amplitude"]
+            lockin_phase = parameters["lockin_phase"]
+            lockin_frequency = parameters["lockin_frequency"]
+            comment = parameters["comment"]
 
             # if lockin_status == 'ON':
             label.append(
@@ -367,7 +371,7 @@ class Spm:
                 f"setpoint: I = {set_point[0]:.0f}{set_point[1]}, V = {bias[0]:.1f}{bias[1]}"
             )
             label.append(f"comment: {comment}")
-            label.append(f'Date: {date}')
+            label.append(f"Date: {date}")
 
         label.append(f"path: {self.path}")
         label = "\n".join(label)
