@@ -1,121 +1,121 @@
-Experiment	bias spectroscopy	
-Saved Date	24.04.2024 14:25:51	
-User		
-Date		
-X (m)	-2E-9	
-Y (m)	-833.333E-12	
-Z (m)	-666.193E-12	
-Z offset (m)	0E+0	
-Settling time (s)	200E-6	
-Integration time (s)	10E-3	
-Z-Ctrl hold	TRUE	
-Final Z (m)	N/A	
-Start time	24.04.2024 14:25:48	
-Filter type	None	
-Order		
-Cutoff frq		
-Bias>Bias (V)	2E+0	
-Bias>Calibration (V/V)	1E+0	
-Bias>Offset (V)	0E+0	
-Bias Spectroscopy>Sweep Start (V)	-2E+0	
-Bias Spectroscopy>Sweep End (V)	2E+0	
-Bias Spectroscopy>Num Pixel	256	
-Bias Spectroscopy>Z Avg time (s)	50E-3	
-Bias Spectroscopy>Z offset (m)	0E+0	
-Bias Spectroscopy>1st Settling time (s)	5E-3	
-Bias Spectroscopy>Settling time (s)	200E-6	
-Bias Spectroscopy>Integration time (s)	10E-3	
-Bias Spectroscopy>End Settling time (s)	5E-3	
-Bias Spectroscopy>Z control time (s)	200E-3	
-Bias Spectroscopy>Max Slew rate (V/s)	Inf	
-Bias Spectroscopy>backward sweep	FALSE	
-Bias Spectroscopy>Z-controller hold	TRUE	
-Bias Spectroscopy>Number of sweeps	1	
-Bias Spectroscopy>Channels	Current (A);Bias (V);LI Demod 1 X (A);LI Demod 1 Y (A);LI Demod 2 X (A);LI Demod 2 Y (A)	
-Bias Spectroscopy>Reset Bias	TRUE	
-Bias Spectroscopy>Record final Z	FALSE	
-Bias Spectroscopy>Lock-In run	FALSE	
-Bias Spectroscopy>Revert Z Offset	FALSE	
-Current>Current (A)	26.5437E-12	
-Current>Calibration (A/V)	1E-9	
-Current>Offset (A)	0E+0	
-Current>Gain	LN 10^9	
-Lock-in>Lock-in status	OFF	
-Lock-in>Modulated signal	Bias (V)	
-Lock-in>Frequency (Hz)	2E+3	
-Lock-in>Amplitude	100E-3	
-Lock-in>Demodulated signal	Current (A)	
-Lock-in>HP Filter Cutoff D1 (Hz)	38.8562E+0	
-Lock-in>HP Filter Cutoff D2 (Hz)	38.8562E+0	
-Lock-in>HP Filter Order D1	OFF	
-Lock-in>HP Filter Order D2	OFF	
-Lock-in>Harmonic D1	1	
-Lock-in>Harmonic D2	2	
-Lock-in>Reference phase D1 (deg)	0E+0	
-Lock-in>Reference phase D2 (deg)	0E+0	
-Lock-in>LP Filter Cutoff D1 (Hz)	621.699E+0	
-Lock-in>LP Filter Cutoff D2 (Hz)	621.699E+0	
-Lock-in>LP Filter Order D1	OFF	
-Lock-in>LP Filter Order D2	OFF	
-Lock-in>Sync Filter D1	ON	
-Lock-in>Sync Filter D2	ON	
-Lock-in 2>Lock-in status	OFF	
-Lock-in 2>Modulated signal	Input 2 (V)	
-Lock-in 2>Frequency (Hz)	1E+3	
-Lock-in 2>Amplitude	1E+0	
-Lock-in 2>Demodulated signal	Current (A)	
-Lock-in 2>HP Filter Cutoff D3 (Hz)	38.8562E+0	
-Lock-in 2>HP Filter Cutoff D4 (Hz)	38.8562E+0	
-Lock-in 2>HP Filter Order D3	OFF	
-Lock-in 2>HP Filter Order D4	OFF	
-Lock-in 2>Harmonic D3	1	
-Lock-in 2>Harmonic D4	1	
-Lock-in 2>Reference phase D3 (deg)	0E+0	
-Lock-in 2>Reference phase D4 (deg)	0E+0	
-Lock-in 2>LP Filter Cutoff D3 (Hz)	621.699E+0	
-Lock-in 2>LP Filter Cutoff D4 (Hz)	621.699E+0	
-Lock-in 2>LP Filter Order D3	OFF	
-Lock-in 2>LP Filter Order D4	OFF	
-Lock-in 2>Sync Filter D3	ON	
-Lock-in 2>Sync Filter D4	ON	
-NanonisMain>Session Path	C:\Users\scbr\Documents\Nanonis Sessions\nanonis_session_sim	
-NanonisMain>SW Version	Generic 5e	
-NanonisMain>UI Release	13632	
-NanonisMain>RT Release	13632	
-NanonisMain>RT Frequency (Hz)	20E+3	
-NanonisMain>Signals Oversampling	10	
-NanonisMain>Acquisition Period (s)	20E-3	
-NanonisMain>Animations Period (s)	20E-3	
-NanonisMain>Indicators Period (s)	300E-3	
-NanonisMain>Measurements Period (s)	500E-3	
-Piezo Configuration>Active Calib.	Default	
-Piezo Configuration>Calib. X (m/V)	10E-9	
-Piezo Configuration>Calib. Y (m/V)	10E-9	
-Piezo Configuration>Calib. Z (m/V)	5E-9	
-Piezo Configuration>HV Gain X	15	
-Piezo Configuration>HV Gain Y	15	
-Piezo Configuration>HV Gain Z	15	
-Piezo Configuration>Tilt X (deg)	0	
-Piezo Configuration>Tilt Y (deg)	0	
-Piezo Configuration>Curvature radius X (m)	Inf	
-Piezo Configuration>Curvature radius Y (m)	Inf	
-Piezo Configuration>2nd order corr X (V/m^2)	0E+0	
-Piezo Configuration>2nd order corr Y (V/m^2)	0E+0	
-Piezo Configuration>Drift X (m/s)	0E+0	
-Piezo Configuration>Drift Y (m/s)	0E+0	
-Piezo Configuration>Drift Z (m/s)	0E+0	
-Piezo Configuration>Drift correction status (on/off)	FALSE	
-Temperature 1>Temperature 1 (K)	515.135E+0	
-Z-Controller>Z (m)	-666.293E-12	
-Z-Controller>Controller name	log Current	
-Z-Controller>Controller status	ON	
-Z-Controller>Setpoint	50E-12	
-Z-Controller>Setpoint unit	A	
-Z-Controller>P gain	200E-12	
-Z-Controller>I gain	200E-9	
-Z-Controller>Time const (s)	1E-3	
-Z-Controller>TipLift (m)	0E+0	
-Z-Controller>Switch off delay (s)	0E+0	
+Experiment	bias spectroscopy
+Saved Date	24.04.2024 14:25:51
+User
+Date
+X (m)	-2E-9
+Y (m)	-833.333E-12
+Z (m)	-666.193E-12
+Z offset (m)	0E+0
+Settling time (s)	200E-6
+Integration time (s)	10E-3
+Z-Ctrl hold	TRUE
+Final Z (m)	N/A
+Start time	24.04.2024 14:25:48
+Filter type	None
+Order
+Cutoff frq
+Bias>Bias (V)	2E+0
+Bias>Calibration (V/V)	1E+0
+Bias>Offset (V)	0E+0
+Bias Spectroscopy>Sweep Start (V)	-2E+0
+Bias Spectroscopy>Sweep End (V)	2E+0
+Bias Spectroscopy>Num Pixel	256
+Bias Spectroscopy>Z Avg time (s)	50E-3
+Bias Spectroscopy>Z offset (m)	0E+0
+Bias Spectroscopy>1st Settling time (s)	5E-3
+Bias Spectroscopy>Settling time (s)	200E-6
+Bias Spectroscopy>Integration time (s)	10E-3
+Bias Spectroscopy>End Settling time (s)	5E-3
+Bias Spectroscopy>Z control time (s)	200E-3
+Bias Spectroscopy>Max Slew rate (V/s)	Inf
+Bias Spectroscopy>backward sweep	FALSE
+Bias Spectroscopy>Z-controller hold	TRUE
+Bias Spectroscopy>Number of sweeps	1
+Bias Spectroscopy>Channels	Current (A);Bias (V);LI Demod 1 X (A);LI Demod 1 Y (A);LI Demod 2 X (A);LI Demod 2 Y (A)
+Bias Spectroscopy>Reset Bias	TRUE
+Bias Spectroscopy>Record final Z	FALSE
+Bias Spectroscopy>Lock-In run	FALSE
+Bias Spectroscopy>Revert Z Offset	FALSE
+Current>Current (A)	26.5437E-12
+Current>Calibration (A/V)	1E-9
+Current>Offset (A)	0E+0
+Current>Gain	LN 10^9
+Lock-in>Lock-in status	OFF
+Lock-in>Modulated signal	Bias (V)
+Lock-in>Frequency (Hz)	2E+3
+Lock-in>Amplitude	100E-3
+Lock-in>Demodulated signal	Current (A)
+Lock-in>HP Filter Cutoff D1 (Hz)	38.8562E+0
+Lock-in>HP Filter Cutoff D2 (Hz)	38.8562E+0
+Lock-in>HP Filter Order D1	OFF
+Lock-in>HP Filter Order D2	OFF
+Lock-in>Harmonic D1	1
+Lock-in>Harmonic D2	2
+Lock-in>Reference phase D1 (deg)	0E+0
+Lock-in>Reference phase D2 (deg)	0E+0
+Lock-in>LP Filter Cutoff D1 (Hz)	621.699E+0
+Lock-in>LP Filter Cutoff D2 (Hz)	621.699E+0
+Lock-in>LP Filter Order D1	OFF
+Lock-in>LP Filter Order D2	OFF
+Lock-in>Sync Filter D1	ON
+Lock-in>Sync Filter D2	ON
+Lock-in 2>Lock-in status	OFF
+Lock-in 2>Modulated signal	Input 2 (V)
+Lock-in 2>Frequency (Hz)	1E+3
+Lock-in 2>Amplitude	1E+0
+Lock-in 2>Demodulated signal	Current (A)
+Lock-in 2>HP Filter Cutoff D3 (Hz)	38.8562E+0
+Lock-in 2>HP Filter Cutoff D4 (Hz)	38.8562E+0
+Lock-in 2>HP Filter Order D3	OFF
+Lock-in 2>HP Filter Order D4	OFF
+Lock-in 2>Harmonic D3	1
+Lock-in 2>Harmonic D4	1
+Lock-in 2>Reference phase D3 (deg)	0E+0
+Lock-in 2>Reference phase D4 (deg)	0E+0
+Lock-in 2>LP Filter Cutoff D3 (Hz)	621.699E+0
+Lock-in 2>LP Filter Cutoff D4 (Hz)	621.699E+0
+Lock-in 2>LP Filter Order D3	OFF
+Lock-in 2>LP Filter Order D4	OFF
+Lock-in 2>Sync Filter D3	ON
+Lock-in 2>Sync Filter D4	ON
+NanonisMain>Session Path	C:\Users\scbr\Documents\Nanonis Sessions\nanonis_session_sim
+NanonisMain>SW Version	Generic 5e
+NanonisMain>UI Release	13632
+NanonisMain>RT Release	13632
+NanonisMain>RT Frequency (Hz)	20E+3
+NanonisMain>Signals Oversampling	10
+NanonisMain>Acquisition Period (s)	20E-3
+NanonisMain>Animations Period (s)	20E-3
+NanonisMain>Indicators Period (s)	300E-3
+NanonisMain>Measurements Period (s)	500E-3
+Piezo Configuration>Active Calib.	Default
+Piezo Configuration>Calib. X (m/V)	10E-9
+Piezo Configuration>Calib. Y (m/V)	10E-9
+Piezo Configuration>Calib. Z (m/V)	5E-9
+Piezo Configuration>HV Gain X	15
+Piezo Configuration>HV Gain Y	15
+Piezo Configuration>HV Gain Z	15
+Piezo Configuration>Tilt X (deg)	0
+Piezo Configuration>Tilt Y (deg)	0
+Piezo Configuration>Curvature radius X (m)	Inf
+Piezo Configuration>Curvature radius Y (m)	Inf
+Piezo Configuration>2nd order corr X (V/m^2)	0E+0
+Piezo Configuration>2nd order corr Y (V/m^2)	0E+0
+Piezo Configuration>Drift X (m/s)	0E+0
+Piezo Configuration>Drift Y (m/s)	0E+0
+Piezo Configuration>Drift Z (m/s)	0E+0
+Piezo Configuration>Drift correction status (on/off)	FALSE
+Temperature 1>Temperature 1 (K)	515.135E+0
+Z-Controller>Z (m)	-666.293E-12
+Z-Controller>Controller name	log Current
+Z-Controller>Controller status	ON
+Z-Controller>Setpoint	50E-12
+Z-Controller>Setpoint unit	A
+Z-Controller>P gain	200E-12
+Z-Controller>I gain	200E-9
+Z-Controller>Time const (s)	1E-3
+Z-Controller>TipLift (m)	0E+0
+Z-Controller>Switch off delay (s)	0E+0
 
 [DATA]
 Bias calc (V)	Current (A)	Bias (V)	LI Demod 1 X (A)	LI Demod 1 Y (A)	LI Demod 2 X (A)	LI Demod 2 Y (A)

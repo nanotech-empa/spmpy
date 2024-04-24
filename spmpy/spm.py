@@ -203,7 +203,7 @@ class Spm:
             unit = self.SignalsList[chNum]["ChannelUnit"]
 
             return (data, unit)
-        
+
         elif self.type == "grid":
             if direction == "backward":
                 channel = channel + "_bw"
@@ -727,10 +727,8 @@ class Spm:
         NumScan = 0
         NumGrid = 0
 
-        
         for root, dirs, filenames in walk(FilePath):
             for file in filenames:
-                
                 if file.endswith(".sxm") and file.startswith(FilePrefix):
                     if not ((ImportOnly == "spec") or (ImportOnly == "grid")):
                         files.append(Spm(root + "/" + file))
