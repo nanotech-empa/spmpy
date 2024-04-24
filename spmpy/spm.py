@@ -44,6 +44,9 @@ class Spm:
         elif file_extension == ".dat":
             self.napImport = nap.read.Spec(path)
             self.type = "spec"
+        elif file_extension == ".3ds":
+            self.napImport = nap.read.Grid(path)
+            self.type = "grid"
         else:
             print("Datatype not supported.")
             return
@@ -190,6 +193,18 @@ class Spm:
             return (im, unit)
 
         elif self.type == "spec":
+            if direction == "backward":
+                channel = channel + "_bw"
+                # print(channel)
+
+            chNum = [d["ChannelNickname"] for d in self.SignalsList].index(channel)
+            data = self.napImport.signals[self.SignalsList[chNum]["ChannelName"]]
+            data = data * self.SignalsList[chNum]["ChannelScaling"]
+            unit = self.SignalsList[chNum]["ChannelUnit"]
+
+            return (data, unit)
+        
+        elif self.type == "grid":
             if direction == "backward":
                 channel = channel + "_bw"
                 # print(channel)
@@ -710,25 +725,34 @@ class Spm:
         files = []
         NumSpec = 0
         NumScan = 0
+        NumGrid = 0
 
+        
         for root, dirs, filenames in walk(FilePath):
             for file in filenames:
+                
                 if file.endswith(".sxm") and file.startswith(FilePrefix):
-                    if not (ImportOnly == "spec"):
+                    if not ((ImportOnly == "spec") or (ImportOnly == "grid")):
                         files.append(Spm(root + "/" + file))
                         NumScan = NumScan + 1
                 elif file.endswith(".dat") and file.startswith(FilePrefix):
-                    if not (ImportOnly == "scan"):
+                    if not ((ImportOnly == "scan") or (ImportOnly == "grid")):
                         files.append(Spm(root + "/" + file))
                         NumSpec = NumSpec + 1
+                elif file.endswith(".3ds") and file.startswith(FilePrefix):
+                    if not ((ImportOnly == "scan") or (ImportOnly == "spec")):
+                        files.append(Spm(root + "/" + file))
+                        NumGrid = NumGrid + 1
 
         print(
             str(len(files))
             + " files imported; "
             + str(NumScan)
-            + " scan(s) and "
+            + " scan(s), "
             + str(NumSpec)
-            + " spectra"
+            + " spectra, and "
+            + str(NumGrid)
+            + " grids"
         )
 
         return files
