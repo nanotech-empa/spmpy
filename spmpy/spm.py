@@ -57,15 +57,15 @@ class Spm:
             self.SignalsList.append(
                 {
                     "ChannelName": key,
-                    "ChannelNickname": config["Channels"][key]["nickname"]
-                    if in_config
-                    else key,
-                    "ChannelScaling": config["Channels"][key]["scaling"]
-                    if in_config
-                    else 1.0,
-                    "ChannelUnit": config["Channels"][key]["unit"]
-                    if in_config
-                    else "N/A",
+                    "ChannelNickname": (
+                        config["Channels"][key]["nickname"] if in_config else key
+                    ),
+                    "ChannelScaling": (
+                        config["Channels"][key]["scaling"] if in_config else 1.0
+                    ),
+                    "ChannelUnit": (
+                        config["Channels"][key]["unit"] if in_config else "N/A"
+                    ),
                 }
             )
 
