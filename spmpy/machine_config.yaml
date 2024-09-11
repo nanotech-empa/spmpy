@@ -140,15 +140,15 @@ Channels:
       unit: pA
   Delay Sampling (s):
       nickname: Delay
-      scaling: 1
+      scaling: 1e12
       unit: ps
   Delay THz1 (s):
       nickname: Delay1
-      scaling: 1
+      scaling: 1e12
       unit: ps
   Delay THz2 (s):
       nickname: Delay2
-      scaling: 1
+      scaling: 1e12
       unit: ps
   Position Phase1 (m):
       nickname: Phase
@@ -170,66 +170,6 @@ Channels:
       nickname: Index
       scaling: 1
       unit: N
-  Wavelength:
-      nickname: Wavelength
-      scaling: 1
-      unit: nm
-  Intensity:
-      nickname: Intensity
-      scaling: 1
-      unit: ''
-  LI Demod 0 X (V):
-      nickname: EOS
-      scaling: 1
-      unit: V
-  LI Demod 0 Y (V):
-      nickname: EOS_Y
-      scaling: 1
-      unit: V
-  LI Demod 3 X (A):
-      nickname: I_THz
-      scaling: 1e12
-      unit: pA
-  LI Demod 3 Y (A):
-      nickname: I_THz_Y
-      scaling: 1e12
-      unit: pA
-  LI_Demod_3_X:
-      nickname: I_THz
-      scaling: 1e12
-      unit: pA
-  LI_Demod_3_Y:
-      nickname: I_THz_Y
-      scaling: 1e12
-      unit: pA
-  Delay Sampling (s):
-      nickname: Delay
-      scaling: 1
-      unit: ps
-  Delay THz1 (s):
-      nickname: Delay1
-      scaling: 1
-      unit: ps
-  Delay THz2 (s):
-      nickname: Delay2
-      scaling: 1
-      unit: ps
-  Position Phase1 (m):
-      nickname: Phase
-      scaling: 1e3
-      unit: mm
-  Rotation1 (deg):
-      nickname: Rot1
-      scaling: 1
-      unit: deg
-  Rotation2 (deg):
-      nickname: Rot2
-      scaling: 1
-      unit: deg
-  Rotation (deg):
-      nickname: Rot
-      scaling: 1
-      unit: deg
   Index:
       nickname: Index
       scaling: 1
@@ -242,6 +182,10 @@ Channels:
       nickname: Intensity
       scaling: 1
       unit: 'count'
+  Q_THz (e/pulse):
+      nickname: Q_THz
+      scaling: 1
+      unit: 'e/pulse'
 
 Parameters:
   X (m):
