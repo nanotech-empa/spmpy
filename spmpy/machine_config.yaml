@@ -270,7 +270,7 @@ Parameters:
       unit: deg
   Parameter>Position Phase1 (m):
       nickname: Phase
-      scaling: 1e3
+      scaling: 1e-3
       unit: mm
   Parameter>Position_Phase1 (m):
       nickname: Phase_depricated
@@ -280,3 +280,11 @@ Parameters:
       nickname: frep
       scaling: 1
       unit: MHz
+  PumpProbe>Vdc:
+      nickname: Vdc
+      scaling: 1
+      unit: V
+  Bias Spectroscopy>Integration time (s):
+      nickname: t_int_bias
+      scaling: 1
+      unit: s
