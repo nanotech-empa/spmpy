@@ -288,3 +288,7 @@ Parameters:
       nickname: t_int_bias
       scaling: 1
       unit: s
+  Z Spectroscopy>Integration time (s):
+      nickname: t_int_z
+      scaling: 1
+      unit: s
